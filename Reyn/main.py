@@ -4,72 +4,74 @@ def xlen(elmt): #fungsi len general
         count += 1
     return count
 
-
-def xappend(list, element):
-    list += [element]
-    return list
-
-def xsplit(string):
-    temp = []
-    dummy = ""
-    for char in string:
-        if char == ";":
-            temp = xappend(temp, dummy)
-            dummy = ""
-        else:
-            dummy += char
-
-    temp = xappend(temp,dummy)
-    return temp
-    
-user = []
-password = []
-role = []
+def dumstring(str):
+    dumstr = ''
+    for i in str:
+        dumstr += i
+    return dumstr
 
 with open("user.csv") as file:
     rows = file.readlines()
 
+
+user = [0 for i in range(3)]
+password = [0 for i in range(3)]
+role = [0 for i in range(3)]
+
+char = ""
+k = 0
+parameter = 0
+
+
 for i in range(xlen(rows)):
-    if i < xlen(rows) - 1:
-        multi = xsplit(rows[i+1])
-        for j in range(2):
-            if j == 0:
-                user = xappend(user, multi[j])
-            elif j == 1:
-                password = xappend(password, multi[j])
-            elif j == 2:
-                role = xappend(role, multi[j])
+    dumarray = rows[i]
+    dumstr = dumstring(dumarray)
+    for j in range(xlen(dumstr)):
+        if dumstr[j] == ";":
+            parameter += 1
+            if parameter == 1:
+                user[k] = char
+                char = ""
+            elif parameter == 2:
+                password[k] = char
+                char = ""
+
+        elif j == xlen(dumstr)-1:
+                role[k] = char + dumstr[xlen(dumstr)-1]
+                char = ""
+
+        elif dumstr[j] != ";":
+            char += dumstr[j]
+
+    char =""
+    k += 1
+    parameter = 0
+
 
 def login(user, password):
     num  = xlen(user)
     username = input("Username: ")
     passw = input("Password: ")
-    
+    count = 0
     for i in range(num):
-        if (username == user[i]) and (passw == password[i]):
+        if username != user[i]:
+            count += 1
+            if count == xlen(user):
+                print("Username tidak terdaftar!")
+        elif (username == user[i]) and (passw == password[i]):
             print(f"Selamat datang, {username}!\nMasukkan command “help” untuk daftar command yang dapat kamu panggil.")
-            Status = True
-            main()
         elif (username == user[i]) and (passw != password[i]):
             print("Password salah!")
-            main()
-        else:
-            print("Username tidak terdaftar!")
+    main()
 
-    return Status #dicek untuk saat logout
 
 def logout():
     quit
 
-def help():
-    print("Submenu....")
-    
 def main():
     opsi = input()
     if opsi == "login":
         login(user, password)
-    elif opsi == "help":
-        help()
     elif opsi == "logout":
         logout()
 
