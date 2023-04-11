@@ -1,22 +1,24 @@
 from construct import *
 
-            
+#gunakan fungsi newlist untuk memanggil suatu array
+#cekstr digunakan untuk array yang berisikan \n
 
-def main2():
-    stat = 1
-    opsi = input()
-    if opsi == "login":
-        if stat == 0:
-            print("Anda sudah login!")
-        else:
-            cek = login(user, password)
-            stat = status(cek)
-            main2()
+#User.csv
+user = newlist(user)
+password = newlist(password)
+role = cekstr(newlist(role))  
 
-    elif opsi == "logout":
-        logout()
-    elif opsi  == "help":
-        print("aaa")
+#Bahan_Bangunan.csv
+nama = newlist(nama)
+deskripsi = newlist(deskripsi)
+jumlah = cekstr(newlist(jumlah))
+
+#candi.csv
+id = newlist(id)
+pembuat = newlist(pembuat)
+pasir = newlist(pasir)
+batu = newlist(batu)
+air = cekstr(newlist(air))
 
 def login(user, password):
     num  = length(user)
@@ -28,34 +30,77 @@ def login(user, password):
             count += 1
             if count == length(user):
                 print("Username tidak terdaftar!")
+                return("pass", "none")
         elif (username == user[i]) and (passw == password[i]):
             print(f"Selamat datang, {username}!\nMasukkan command “help” untuk daftar command yang dapat kamu panggil.")
             return(username, role[i]) 
         elif (username == user[i]) and (passw != password[i]):
             print("Password salah!")
-
-
-def main():
-    username = "pass"
-    status = False
-    while status == False:
-        opsi = input(">>> \n")
-        if opsi == "login":
-            if username != "pass":
-                print(f"Login gagal!\nAnda telah login dengan username {username}, silahkan lakukan logout sebelum melakukan login kembali")
-            else:
-                (username, role) = login(user, password)
-
-        elif opsi == "logout":
-            logout()
+            return("pass", "none")
 
 def logout():
-     quit()
+     username = "pass"
+     role = "none"
+     return(username, role)
 
-def status(cek):
-    for i in range(length(user)):
-        if user[i] == cek:
-            return 0
-        else:
-            return 1
+def help(role):
+    if role == "bandung_bondowoso":
+        print("===================== HELP ======================")
+        print("1. logout")
+        print("   Untuk keluar dari akun yang digunakan sekarang")
+        print("2. summonjin")
+        print("   Untuk memanggil jin")
+        print("3. haousjin")
+        print("   Untuk menghapus jin")
+        print("4. ubahjin")
+        print("   Untuk mengubah tipe jin")
+        print("5. batchkumpul")
+        print("   Untuk mengumpulkan bahan")
+        print("6. batchbangun")
+        print("   Untuk mengumpulkan jin bangun")
+        print("7. laporanjin")
+        print("   Untuk mengetahui kinerja jin")
+        print("8. laporancandi")
+        print("   Untuk mengetahui proses pembangunan candi")
+        print("9. save")
+        print("   Untuk menyimpan data")
 
+    elif role== "roro_jonggrang":
+        print("===================== HELP ======================")
+        print("1. logout")
+        print("   Untuk keluar dari akun yang digunakan sekarang")
+        print("2. hancurkancandi")
+        print("   Untuk menghancurkan candi yang tersedia")
+        print("3. ayamberkokok")
+        print("   Untuk menyelesaikan permainan.")
+        print("4. save")
+        print("   Untuk menyimpan data")
+    
+    elif role== "jin_pengumpul":
+        print("====================== HELP ======================")
+        print("1. logout")
+        print("   Untuk keluar dari akun yang digunakan sekarang")
+        print("2. kumpul")
+        print("   Untuk mengumpulkan resource candi")
+
+    elif role== "jin_pembangun":
+        print("====================== HELP ======================")
+        print("1. logout")
+        print("   Untuk keluar dari akun yang digunakan sekarang")
+        print("2. bangun")
+        print("   Untuk membangun candi")
+
+    elif role == "none":
+        print("====================== HELP ======================")
+        print("1. login")
+        print("   Untuk masuk menggunakan akun")
+        print("2. load")
+        print("   Untuk memuat file eksternal ke dalam permainan")
+        print("3. exit")
+        print("   Untuk keluar dari permainan")
+
+    else:
+        return None
+
+def summon_jin():
+    return 0
