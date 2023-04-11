@@ -47,6 +47,18 @@ def newlist(lst): #untuk menghasilkan list tanpa &
 
     return final 
 
+def newint(lst): #ubah list of str menjadi list of int
+        i = 0
+        while i < length(lst):
+            lst[i] = int(lst[i])
+            i += 1
+        return lst
+
+def newlist_int(lst): #newlist + newint
+    xlist = newlist(lst)
+    finals = newint(xlist)
+    return finals
+
 def cekstr(dumstring): #cek jika str ada \n
     newstr = ["&" for i in range(length(dumstring))]
     for i in range(length(dumstring)):
@@ -71,10 +83,10 @@ char = ""
 k = 0
 parameter = 0
 
-for i in range(length(rows)): #rows = list
+for i in range(length(rows)): 
     dumarray = rows[i]
     dumstr = dumstring(dumarray)
-    for j in range(length(dumstr)):
+    for j in range(length(dumstr)): #fungsi split
         if dumstr[j] == ";":
             parameter += 1
             if parameter == 1:
@@ -97,17 +109,80 @@ for i in range(length(rows)): #rows = list
 
 
 #untuk bahan bangunan
-with open("bahan_bangunan.csv") as file:
-    rows = file.readlines()
-nama = []
-deskripsi = []
-jumlah = []
+with open("bahan_bangunan.csv") as file_2:
+    bahan = file_2.readlines()
+nama = ["&" for i in range(100)]
+deskripsi = ["&" for i in range(100)]
+jumlah = ["&" for i in range(100)] #int
+
+char = ""
+k = 0
+parameter = 0
+
+for i in range(length(bahan)): 
+    dumarray = bahan[i]
+    dumstr = dumstring(dumarray)
+    for j in range(length(dumstr)): #fungsi split
+        if dumstr[j] == ";":
+            parameter += 1
+            if parameter == 1:
+                nama[k] = char
+                char = ""
+            elif parameter == 2:
+                deskripsi[k] = char
+                char = ""
+        elif j == (length(dumstr)-1):
+                jumlah[k] = char + dumstr[length(dumstr)-1]
+                char = ""
+
+        elif dumstr[j] != ";":
+            char += dumstr[j]
+
+    char =""
+    k += 1
+    parameter = 0
+
 
 #untuk candi
-with open("candi.csv") as file:
-    rows = file.readlines()
-id = []
-pembuat = []
-pasir = []
-batu = []
-air = []
+with open("candi.csv") as file_3:
+    candi = file_3.readlines()
+id = ["&" for i in range(100)] #int
+pembuat = ["&" for i in range(100)]
+pasir = ["&" for i in range(100)] #int
+batu = ["&" for i in range(100)] #int
+air = ["&" for i in range(100)] #int
+
+char = ""
+k = 0
+parameter = 0
+
+for i in range(length(candi)): 
+    dumarray = candi[i]
+    dumstr = dumstring(dumarray)
+    for j in range(length(dumstr)): #fungsi split
+        if dumstr[j] == ";":
+            parameter += 1
+            if parameter == 1:
+                id[k] = char 
+                char = ""
+            elif parameter == 2:
+                pembuat[k] = char
+                char = ""
+            elif parameter == 3:
+                pasir[k] = char 
+                char = ""
+            elif parameter == 4:
+                batu[k] = char 
+                char = ""
+
+        elif j == (length(dumstr)-1):
+                air[k] = char + dumstr[length(dumstr)-1]
+                char = ""
+
+        elif dumstr[j] != ";":
+            char += dumstr[j]
+
+    char =""
+    k += 1
+    parameter = 0
+
